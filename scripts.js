@@ -1,31 +1,58 @@
+var Counter = React.createClass({
+	getInitialState: function() {
+		return {
+			counterEven: 0,
+			counterOdd: 0
+		};
+	},
 
+	increment: function(num) {
+		var check = num % 2;
+		if (check === 0) {
+			this.setState({
+				counterEven: this.state.counterEven + num
+			});
+		} else {
+			this.setState({
+				counterOdd: this.state.counterOdd + num
+			});
+		}
+	},
 
-var Increment = React.createClass({
-  getInitialState: function() {
-    return {
-      counter: 0
-    };
-  },
+	decrement: function(num) {
+		var check = num % 2;
+		if (check === 0) {
+			this.setState({
+				counterEven: this.state.counterEven - num
+			});
+		} else {
+			this.setState({
+				counterOdd: this.state.counterOdd - num
+			});
+		}
+	},
 
-  increment: function() {
-    this.setState({
-      counter: this.state.counter + 1
-    });
-  },
-  
-  decrement: function(){
-    this.setState({
-      counter: this.state.counter - 1
-    });
-  },
-
-  render: function() {
-    return <div>
-      <div id='counter'>{this.state.counter}</div> 
-      <button onClick = {this.increment}> Dodaj 1 </button> 
-      <button onClick = {this.decrement}> Minus 1 </button> 
-     </div>
-  }
+	render: function() {
+		return React.createElement('div', {className: 'container'},
+			React.createElement('div', {className: 'row'}, 
+				React.createElement('p', {}, 'Licznik parzyste: ' + this.state.counterEven),
+				React.createElement('button', {onClick: this.increment.bind(this, 2), className: 'btn'}, '+'),
+				React.createElement('button', {onClick: this.decrement.bind(this, 2), className: 'btn'}, '-')
+			),
+			React.createElement('div', {className: 'row'}, 
+				React.createElement('p', {}, 'Licznik nieparzyste: ' + this.state.counterOdd),
+				React.createElement('button', {onClick: this.increment.bind(this, 1), className: 'btn'}, '+'),
+				React.createElement('button', {onClick: this.decrement.bind(this, 1), className: 'btn'}, '-')
+			)
+		);
+	}
 });
 
-React.render(<Increment />, document.getElementById('app'));
+var element = React.createElement('div', {}, 
+	React.createElement(Counter, {}),
+	React.createElement(Counter, {}),
+	React.createElement(Counter, {}),
+	React.createElement(Counter, {})
+);
+
+ReactDOM.render(element, document.getElementById('app'));
